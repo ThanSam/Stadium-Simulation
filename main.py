@@ -1,8 +1,6 @@
 import random
 import numpy
-import Gate as G
-import Spectator as Sp
-import TrafficZone as Tz
+from Classes import Gate as G, Spectator as Sp, TrafficZone as Tz
 
 Gate1 = G.Gate("G1", 4000, 1, 0)
 Gate2 = G.Gate("G2", 2000, 1, 0)
