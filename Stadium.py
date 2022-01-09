@@ -4,4 +4,3 @@ class Stadium:
         self.capacity = capacity
         self.zones = zones
         self.gates = gates
-    # def SpectatorsGen(self):
