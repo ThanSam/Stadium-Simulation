@@ -23,7 +23,6 @@ zones = [Zone1, Zone2, Zone3]
 startTime = simTime = 0
 endTime = 300  # 5 hours before the match
 stadiumCapacity = 25000
-stadium = S.Stadium(stadiumCapacity, zones, gates)
 
 count = 0  # number of spectators arriving
 
