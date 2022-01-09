@@ -2,7 +2,6 @@ import random
 import numpy
 import Gate as G
 import Spectator as Sp
-import Stadium as S
 import TrafficZone as Tz
 
 Gate1 = G.Gate("G1", 4000, 1, 0)
