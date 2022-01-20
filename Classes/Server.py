@@ -9,10 +9,9 @@ class Server:
         self.Zone = Zone
         self.Queue = []
 
+    def getQueue(self):
+        return self.Queue
+
     def SpectatorService(self, spectator):
         if len(self.Queue) < 3:
             self.Queue.append(spectator)
-            time.sleep(random.randint(2, 4))
-            self.Queue.remove(spectator)
-            spectator.served = True
-        return spectator.served

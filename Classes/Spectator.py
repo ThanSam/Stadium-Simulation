@@ -6,6 +6,7 @@ class Spectator:
         self.arrival = arrival
         self.trafficZone = 0
         self.served = False
+        self.endTime = 0
 
     def EnterTheStadium(self, zones):
         if self.gate == 1 or self.gate == 2:

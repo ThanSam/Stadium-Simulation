@@ -17,17 +17,20 @@ Zone3 = Tz.TrafficZone(3, [Gate5, Gate6], 0)
 
 zones = [Zone1, Zone2, Zone3]
 
-startTime = simTime = 0
+simTime = 0
 endTime = 300  # 5 hours before the match
+
 stadiumCapacity = 25000
 
 count = 0  # number of spectators arriving
 
 while simTime <= endTime:
     simTime += numpy.random.exponential(0.013)
-    newSpectator = Sp.Spectator(count, random.randint(1, 6), simTime)
+    newSpectator = Sp.Spectator(count, random.randint(1, 6), int(simTime))
     tZone = newSpectator.EnterTheStadium(zones)
     tZone.EnterTheTrafficZone(newSpectator)
-    print()
+    tZone.CheckSpectators(simTime)
+    #  ***** tZone.CheckForTheWaitingSpectators()
+    print(count, int(simTime), " arrived.")  # The arrival of each spectator
     count += 1
 print(count)
