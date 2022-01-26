@@ -1,17 +1,20 @@
 import random
-from Classes import Server as S, Spectator as Sp
+from Classes import Server as S, Spectator as Sp, Gate as G
 
 
 class TrafficZone:
+
+    WaitingSpectators = []
 
     def __init__(self, ZoneID, gates, crowdNow):
         self.ZoneID = ZoneID
         self.gates = gates
         self.crowdNow = crowdNow
-        self.WaitingSpectators = []
         self.server1 = S.Server(1, self)
         self.server2 = S.Server(2, self)
         self.server3 = S.Server(3, self)
+        self.additionalServers = []
+        self.serverCount = 3
 
     def getQueue(self):
         return self.QueueZone
@@ -27,10 +30,6 @@ class TrafficZone:
             if simTime >= spec.endTime:
                 self.server3.getQueue().remove(spec)
 
-    def CheckForTheWaitingSpectators(self):
-        for spec in self.WaitingSpectators:
-            self.EnterTheTrafficZone(spec)
-
     def EnterTheTrafficZone(self, spectator):
 
         if len(self.server1.getQueue()) < 3:
@@ -43,4 +42,8 @@ class TrafficZone:
             self.server3.SpectatorService(spectator)
             spectator.endTime = spectator.arrival + random.randint(1, 3)
         else:
-            self.WaitingSpectators.append(spectator)
+            TrafficZone.WaitingSpectators.append(spectator)
+
+    def AddServer(self):
+        self.additionalServers.append(S.Server(self.serverCount+1, self))
+        self.serverCount += 1
