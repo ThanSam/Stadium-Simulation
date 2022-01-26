@@ -20,12 +20,12 @@ zones = [Zone1, Zone2, Zone3]
 simTime = 0
 endTime = 360  # 6 hours before the match starts, spectators can enter the stadium
 
-stadiumCapacity = 20000
+stadiumCapacity = 10000
 
 count = 0  # number of spectators arriving
 
 while simTime <= endTime:
-    simTime += numpy.random.exponential(0.018)  # endTime/StadiumCapacity
+    simTime += numpy.random.exponential(0.036)  # endTime/StadiumCapacity
     newSpectator = Sp.Spectator(count, random.randint(1, 6), int(simTime))
     tZone = newSpectator.EnterTheStadium(zones)
     tZone.EnterTheTrafficZone(newSpectator)
