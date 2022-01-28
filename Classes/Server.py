@@ -1,18 +1,19 @@
-import random
+import numpy
 
 
 class Server:
 
-    def __init__(self, ServerID, Zone, limit):
+    serviceLimit = 8
+
+    def __init__(self, ServerID, Zone):
         self.ServerID = ServerID
         self.Zone = Zone
         self.Queue = []
-        self.serviceLimit = limit
 
-    def SpectatorService(self, spectator):
-        if len(self.Queue) < self.serviceLimit:
+    def SpectatorService(self, spectator, simTime):
+        if len(self.Queue) < Server.serviceLimit:
             self.Queue.append(spectator)
-            spectator.endTime = spectator.arrival + random.randint(1, 3)
+            spectator.endTime = simTime + numpy.random.randint(1, 4, 1, int)[0]
             return True
         else:
             return False

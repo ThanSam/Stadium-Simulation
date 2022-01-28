@@ -1,7 +1,7 @@
 class Gate:
 
-    def __init__(self, GateID, capacity, trafficZoneID, crowdNow):
-        self.GateID = GateID
+    def __init__(self, gateID, capacity, trafficZoneID):
+        self.gateID = gateID
         self.capacity = capacity
         self.trafficZoneID = trafficZoneID
-        self.crowdNow = crowdNow
+        self.crowd = 0

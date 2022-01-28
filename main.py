@@ -1,37 +1,54 @@
-import random
 import numpy
+import random
+
 from Classes import Gate as G, Spectator as Sp, TrafficZone as Tz
 
-Gate1 = G.Gate("G1", 4000, 1, 0)
-Gate2 = G.Gate("G2", 2000, 1, 0)
-Gate3 = G.Gate("G3", 4000, 2, 0)
-Gate4 = G.Gate("G4", 7000, 2, 0)
-Gate5 = G.Gate("G5", 3000, 3, 0)
-Gate6 = G.Gate("G6", 5000, 3, 0)
+Gate1 = G.Gate(1, 4000, 1)
+Gate2 = G.Gate(2, 2000, 2)
+Gate3 = G.Gate(3, 4000, 3)
+Gate4 = G.Gate(4, 7000, 4)
+Gate5 = G.Gate(5, 3000, 5)
+Gate6 = G.Gate(6, 5000, 6)
 
 gates = [Gate1, Gate2, Gate3, Gate4, Gate5, Gate6]
 
-Zone1 = Tz.TrafficZone(1, [Gate1, Gate2], 0)
-Zone2 = Tz.TrafficZone(2, [Gate3, Gate4], 0)
-Zone3 = Tz.TrafficZone(3, [Gate5, Gate6], 0)
+Zone1 = Tz.TrafficZone(1, [Gate1, Gate2])
+Zone2 = Tz.TrafficZone(2, [Gate3, Gate4])
+Zone3 = Tz.TrafficZone(3, [Gate5, Gate6])
 
 zones = [Zone1, Zone2, Zone3]
 
 simTime = 0
 endTime = 360  # 6 hours before the match starts, spectators can enter the stadium
 
-stadiumCapacity = 10000
+stadiumCapacity = 20000
 
 count = 0  # number of spectators arriving
 
-while simTime <= endTime:
-    simTime += numpy.random.exponential(0.036)  # endTime/StadiumCapacity
-    newSpectator = Sp.Spectator(count, random.randint(1, 6), int(simTime))
-    tZone = newSpectator.EnterTheStadium(zones)
-    tZone.EnterTheTrafficZone(newSpectator)
+print("\n------------- Arrivals -------------\n")
+
+while simTime <= endTime and count < stadiumCapacity:
+    simTime += numpy.random.exponential(0.018)  # = endTime/StadiumCapacity
+    newSpectator = Sp.Spectator(count, gates[random.randint(0, 5)], int(simTime))
+    tZone = newSpectator.EnterTheStadium(zones, gates)
+    tZone.EnterTheTrafficZone(newSpectator, int(simTime))
     tZone.CheckSpectators(simTime)
+    Tz.TrafficZone.checkForTheWaiting(zones, gates, simTime)
     print("Spectator with id #", count, "arrived in time:", int(simTime))  # The arrival of each spectator
     count += 1
 
 print("\nTotal spectators arrived: ", count)
-print("\nSpectators who weren't served: ", len(Tz.TrafficZone.WaitingSpectators))
+print("\nSpectators who couldn't be served: ", Tz.TrafficZone.crowdNow)
+
+print("\nZone's 1 servers:", Zone1.serverCount)
+print("Zone's 2 servers:", Zone2.serverCount)
+print("Zone's 3 servers:", Zone3.serverCount)
+print("\nExtra servers:", len(Zone1.additionalServers) + len(Zone2.additionalServers) + len(Zone3.additionalServers))
+
+
+print("\nSpectators in Gate 1:", Gate1.crowd)
+print("Spectators in Gate 2:", Gate2.crowd)
+print("Spectators in Gate 3:", Gate3.crowd)
+print("Spectators in Gate 4:", Gate4.crowd)
+print("Spectators in Gate 5:", Gate5.crowd)
+print("Spectators in Gate 6:", Gate6.crowd)
